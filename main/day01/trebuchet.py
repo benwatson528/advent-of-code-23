@@ -5,9 +5,9 @@ def solve(calibration_values, is_words) -> int:
     return sum((find_digit(c, False, is_words) * 10) + find_digit(c[::-1], True, is_words) for c in calibration_values)
 
 
-def find_digit(calibration_value, is_reversed, search_words):
+def find_digit(calibration_value, is_reversed, is_words):
     lowest_idx = len(calibration_value)
-    if search_words:
+    if is_words:
         for number in NUMBERS.keys():
             word_idx = calibration_value.find(number[::-1] if is_reversed else number)
             if word_idx != -1 and word_idx < lowest_idx:

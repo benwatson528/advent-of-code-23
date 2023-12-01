@@ -18,12 +18,14 @@ def get_puzzle_name(puzzle_url):
     :return: the puzzle name
     """
     try:
-        with urllib.request.urlopen(puzzle_url) as f:
+        with (urllib.request.urlopen(puzzle_url) as f):
             print(f"Retrieving contents of {puzzle_url}")
             entire_page = f.read().decode("utf-8")
             raw_puzzle_name = re.search("--- (.*) ---", entire_page).group(1).split(": ")[1]
-            parsed_puzzle_name = "a_" + raw_puzzle_name if raw_puzzle_name[0].isnumeric() else raw_puzzle_name
-            return parsed_puzzle_name.lower().replace(" ", "_").replace("-", "_")
+            raw_puzzle_name_alphanumeric = "".join([c if c.isalnum() else "" for c in raw_puzzle_name])
+            parsed_puzzle_name = "a_" + raw_puzzle_name_alphanumeric if raw_puzzle_name_alphanumeric[0].isnumeric() \
+                else raw_puzzle_name_alphanumeric
+            return parsed_puzzle_name.strip().lower().replace(" ", "_").replace("-", "_")
     except URLError as e:
         sys.exit(f"Could not get puzzle at {puzzle_url}: {e.reason}")
 
