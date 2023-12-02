@@ -3,8 +3,4 @@ def solve(games, max_cubes) -> int:
 
 
 def play_round(game, max_cubes):
-    for subset in game:
-        for colour, num_in_bag in subset.items():
-            if max_cubes[colour] < num_in_bag:
-                return False
-    return True
+    return all(all(num_in_bag <= max_cubes[colour] for colour, num_in_bag in subset.items()) for subset in game)

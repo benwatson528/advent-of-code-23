@@ -9,7 +9,7 @@ def test_p1_simple():
 
 
 def test_p1_real():
-    assert solve(read_input("data/input.txt"), {"red": 12, "green": 13, "blue": 14}) == 1950 # too low
+    assert solve(read_input("data/input.txt"), {"red": 12, "green": 13, "blue": 14}) == 2164
 
 
 def read_input(file_name):
