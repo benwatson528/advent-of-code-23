@@ -2,15 +2,23 @@ import os
 import re
 from pathlib import Path
 
-from main.day04.scratchcards import solve
+from main.day04.scratchcards import solve_p1, solve_p2
 
 
 def test_p1_simple():
-    assert solve(read_input("data/test_input.txt")) == 13
+    assert solve_p1(read_input("data/test_input.txt")) == 13
 
 
 def test_p1_real():
-    assert solve(read_input("data/input.txt")) == 21959
+    assert solve_p1(read_input("data/input.txt")) == 21959
+
+
+def test_p2_simple():
+    assert solve_p2(read_input("data/test_input.txt")) == 30
+
+
+def test_p2_real():
+    assert solve_p2(read_input("data/input.txt")) == 5132675
 
 
 def read_input(file_name):
