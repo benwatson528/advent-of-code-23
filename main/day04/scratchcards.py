@@ -5,9 +5,8 @@ def solve_p1(games) -> int:
 def solve_p2(games) -> int:
     cards = {i: 1 for i in range(len(games))}
     for i, game in enumerate(games):
-        num_matches = find_matches(game)
-        for j in range(i + 1, i + 1 + num_matches):
-            cards[j] = (cards[i] + cards[j])
+        for j in range(i + 1, i + 1 + find_matches(game)):
+            cards[j] += cards[i]
     return sum(cards.values())
 
 
