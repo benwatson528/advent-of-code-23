@@ -2,17 +2,30 @@ import os
 import re
 from pathlib import Path
 
-from main.day05.if_you_give_a_seed_a_fertilizer import solve
+import pytest
+
+from main.day05.if_you_give_a_seed_a_fertilizer import solve_p1, solve_p2
 
 
 def test_p1_simple():
     seeds, conversions = read_input("data/test_input.txt")
-    assert solve(seeds, conversions) == 35
+    assert solve_p1(seeds, conversions) == 35
 
 
 def test_p1_real():
     seeds, conversions = read_input("data/input.txt")
-    assert solve(seeds, conversions) == 650599855
+    assert solve_p1(seeds, conversions) == 650599855
+
+
+def test_p2_simple():
+    seeds, conversions = read_input("data/test_input.txt")
+    assert solve_p2(seeds, conversions) == 46
+
+
+@pytest.mark.skip(reason="Takes 17s to run")
+def test_p2_real():
+    seeds, conversions = read_input("data/input.txt")
+    assert solve_p2(seeds, conversions) == 1240035
 
 
 def read_input(file_name):
