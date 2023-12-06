@@ -23,7 +23,7 @@ def reverse_conversions(conversions):
 def process_seed(conversions, source):
     for _, rows in conversions:
         for row in rows:
-            if source in range(row[1], row[1] + row[2]):
+            if row[1] <= source < row[1] + row[2]:
                 source = row[0] + (source - row[1])
                 break
     return source

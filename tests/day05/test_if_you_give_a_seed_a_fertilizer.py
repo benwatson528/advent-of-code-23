@@ -2,8 +2,6 @@ import os
 import re
 from pathlib import Path
 
-import pytest
-
 from main.day05.if_you_give_a_seed_a_fertilizer import solve_p1, solve_p2
 
 
@@ -22,7 +20,6 @@ def test_p2_simple():
     assert solve_p2(seeds, conversions) == 46
 
 
-@pytest.mark.skip(reason="Takes 17s to run")
 def test_p2_real():
     seeds, conversions = read_input("data/input.txt")
     assert solve_p2(seeds, conversions) == 1240035
@@ -48,6 +45,6 @@ def process_map(line_iter, line):
     map_name = (line.split("-")[0], line.split("-")[2].split(" ")[0])
     next_line = next(line_iter)
     while next_line and len(next_line) != 0:
-        rows.append(list(int(x) for x in re.findall(r'\d+', next_line)))
+        rows.append([int(x) for x in re.findall(r'\d+', next_line)])
         next_line = next(line_iter, None)
     return map_name, rows
