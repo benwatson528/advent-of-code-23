@@ -2,17 +2,27 @@ import os
 import re
 from pathlib import Path
 
-from main.day08.haunted_wasteland import solve
+from main.day08.haunted_wasteland import solve_p1, solve_p2
 
 
 def test_p1_simple():
     directions, movements = read_input("data/test_input.txt")
-    assert solve(directions, movements) == 6
+    assert solve_p1(directions, movements) == 6
 
 
 def test_p1_real():
     directions, movements = read_input("data/input.txt")
-    assert solve(directions, movements) == 14257
+    assert solve_p1(directions, movements) == 14257
+
+
+def test_p2_simple():
+    directions, movements = read_input("data/test_input_suffix.txt")
+    assert solve_p2(directions, movements) == 6
+
+
+def test_p2_real():
+    directions, movements = read_input("data/input.txt")
+    assert solve_p2(directions, movements) == 16187743689077
 
 
 def read_input(file_name):
