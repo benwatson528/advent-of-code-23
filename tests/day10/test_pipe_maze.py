@@ -1,15 +1,19 @@
 import os
 from pathlib import Path
 
-from main.day10.pipe_maze import solve
+from main.day10.pipe_maze import solve_p1, solve_p2
 
 
 def test_p1_simple():
-    assert solve(read_input("data/test_input.txt")) == 8
+    assert len(solve_p1(read_input("data/test_input.txt"))) // 2 == 8
 
 
 def test_p1_real():
-    assert solve(read_input("data/input.txt")) == 6979
+    assert len(solve_p1(read_input("data/input.txt"))) // 2 == 6979
+
+
+def test_p2_real():
+    assert solve_p2(read_input("data/input.txt")) == 443
 
 
 def read_input(file_name):

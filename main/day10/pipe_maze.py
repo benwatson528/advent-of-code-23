@@ -1,25 +1,34 @@
-from collections import deque
+from shapely.geometry import Point
+from shapely.geometry.polygon import Polygon
 
 DIRECTIONS = {'|': 'NS', '-': 'EW', 'L': 'NE', 'J': 'NW', '7': 'SW', 'F': 'SE', 'S': 'NESW'}
 
 
-def solve(pipes) -> int:
+def solve_p1(pipes):
     start = next(coord for coord, pipe in pipes.items() if pipe == 'S')
     valid_movements = {coord: get_pipe_connections(pipes, coord) for coord, pipe in pipes.items()}
-    return max(len(x) for x in bfs(start, valid_movements).values())
-
-
-def bfs(start, valid_movements):
-    visited = {start: []}
-    to_visit = deque()
-    to_visit.append((start, []))
-    while to_visit:
-        current, path = to_visit.popleft()
+    current = start
+    visited = []
+    while True:
         for adjacent_pipe in valid_movements[current]:
             if adjacent_pipe not in visited and current in valid_movements[adjacent_pipe]:
-                visited[adjacent_pipe] = path + [current]
-                to_visit.append((adjacent_pipe, path + [current]))
-    return visited
+                visited.append(adjacent_pipe)
+                current = adjacent_pipe
+                if pipes[current] == 'S':
+                    return visited
+
+
+def solve_p2(pipes) -> int:
+    loop_pipes = solve_p1(pipes)
+    polygon = Polygon(loop_pipes)
+    x_bounds = max(x for x, _ in pipes.keys())
+    y_bounds = max(y for _, y in pipes.keys())
+    enclosed = set()
+    for x in range(x_bounds):
+        for y in range(y_bounds):
+            if (x, y) not in loop_pipes and polygon.contains(Point(x, y)):
+                enclosed.add((x, y))
+    return len(enclosed)
 
 
 def get_pipe_connections(pipes, coord):
