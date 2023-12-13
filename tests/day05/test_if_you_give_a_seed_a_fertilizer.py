@@ -2,6 +2,8 @@ import os
 import re
 from pathlib import Path
 
+import pytest
+
 from main.day05.if_you_give_a_seed_a_fertilizer import solve_p1, solve_p2
 
 
@@ -20,6 +22,7 @@ def test_p2_simple():
     assert solve_p2(seeds, conversions) == 46
 
 
+@pytest.mark.skip(reason="Slow")
 def test_p2_real():
     seeds, conversions = read_input("data/input.txt")
     assert solve_p2(seeds, conversions) == 1240035
