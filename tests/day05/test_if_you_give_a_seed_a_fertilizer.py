@@ -22,7 +22,7 @@ def test_p2_simple():
     assert solve_p2(seeds, conversions) == 46
 
 
-@pytest.mark.skip(reason="Slow")
+@pytest.mark.skip(reason="6 seconds")
 def test_p2_real():
     seeds, conversions = read_input("data/input.txt")
     assert solve_p2(seeds, conversions) == 1240035

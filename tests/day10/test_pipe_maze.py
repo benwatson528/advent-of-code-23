@@ -14,7 +14,7 @@ def test_p1_real():
     assert len(solve_p1(read_input("data/input.txt"))) // 2 == 6979
 
 
-@pytest.mark.skip(reason="Fails")
+@pytest.mark.skip(reason="15 seconds")
 def test_p2_real():
     assert solve_p2(read_input("data/input.txt")) == 443
 
