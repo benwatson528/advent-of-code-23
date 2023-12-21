@@ -16,10 +16,10 @@ def test_p1_real():
     assert solve_p1(start, rock, 64) == 3816
 
 
-@pytest.mark.skip(reason="Wrong answer")
+@pytest.mark.skip(reason="10 seconds")
 def test_p2_real():
     start, rock = read_input("data/input.txt")
-    assert solve_p2(start, rock, 26501365) == 633170669863726  # too low 633835635904507 wrong too
+    assert solve_p2(start, rock, 26501365) == 634549784009844
 
 
 def read_input(file_name):
