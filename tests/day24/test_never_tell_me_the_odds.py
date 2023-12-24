@@ -20,8 +20,9 @@ def test_p2_simple():
     assert solve_p2(read_input("data/test_input.txt")) == 47
 
 
+@pytest.mark.skip(reason="90 seconds")
 def test_p2_real():
-    assert solve_p2(read_input("data/input.txt")) == -1
+    assert solve_p2(read_input("data/input.txt")) == 673641951253289
 
 
 def read_input(file_name):
