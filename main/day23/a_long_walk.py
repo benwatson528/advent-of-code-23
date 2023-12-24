@@ -1,27 +1,57 @@
-from collections import deque
+from collections import deque, defaultdict
 
 SLOPE_DIRS = {'<': (-1, 0), '>': (1, 0), 'v': (0, 1), '^': (0, -1)}
 
 
 def solve(walkable, handle_slopes) -> int:
+    graph = build_graph(walkable, handle_slopes)
+    graph = squash_nodes(graph)
     start = next(k for k, v in walkable.items() if v == 'S')
     end = next(k for k, v in walkable.items() if v == 'E')
-    return find_longest_path(start, end, walkable, handle_slopes)
+    return find_longest_path(start, end, graph)
 
 
-def find_longest_path(start, end, walkable, handle_slopes):
-    to_visit = deque([(start, set())])
+def build_graph(walkable, handle_slopes):
+    # build graph of (x, y): [(neighbour, num_steps_between)]
+    graph = defaultdict(dict)
+    for coord, tile in walkable.items():
+        for neighbour in get_adjacent_cells(coord, tile, handle_slopes):
+            if walkable.get(neighbour, None):
+                graph[coord][neighbour] = 1
+    return graph
+
+
+def squash_nodes(graph):
+    to_squash = next(iter(k for k, v in graph.items() if len(v) == 2), None)
+    while to_squash:
+        to_merge = []
+        num_steps = 0
+        for adj_coord, adj_steps in graph[to_squash].items():
+            if to_squash in graph[adj_coord]:
+                graph[adj_coord].pop(to_squash)
+            to_merge.append(adj_coord)
+            num_steps += adj_steps
+
+        graph[to_merge[0]][to_merge[1]] = num_steps
+        graph[to_merge[1]][to_merge[0]] = num_steps
+
+        graph.pop(to_squash)
+        to_squash = next(iter(k for k, v in graph.items() if len(v) == 2), None)
+    return graph
+
+
+def find_longest_path(start, end, graph):
+    to_visit = deque([(start, set(), 0)])
     longest = 0
     while to_visit:
-        current, visited = to_visit.popleft()
+        current, visited, num_steps = to_visit.popleft()
         if current == end:
-            if len(visited) > longest:
-                longest = len(visited)
+            longest = max(longest, num_steps)
             continue
 
-        for neighbour in get_adjacent_cells(current, walkable.get(current, None), handle_slopes):
-            if neighbour not in visited and neighbour in walkable:
-                to_visit.append((neighbour, visited | {current}))
+        for neighbour_coord, neighbour_steps in graph[current].items():
+            if neighbour_coord not in visited:
+                to_visit.append((neighbour_coord, visited | {current}, num_steps + neighbour_steps))
 
     return longest
 

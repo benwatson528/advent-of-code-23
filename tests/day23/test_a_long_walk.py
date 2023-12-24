@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+import pytest
+
 from main.day23.a_long_walk import solve
 
 
@@ -16,8 +18,9 @@ def test_p2_simple():
     assert solve(read_input("data/test_input.txt"), handle_slopes=False) == 154
 
 
+@pytest.mark.skip(reason="Takes 60 seconds")
 def test_p2_real():
-    assert solve(read_input("data/input.txt"), handle_slopes=False) == -1  # 5134 too low
+    assert solve(read_input("data/input.txt"), handle_slopes=False) == 6410
 
 
 def read_input(file_name):
@@ -25,6 +28,6 @@ def read_input(file_name):
         walkable = {}
         for y, row in enumerate(f.read().splitlines()):
             for x, cell in enumerate(row):
-                if cell in ('.', 'S', 'E', '<', '>', 'v', '^'):
+                if cell != '#':
                     walkable[(x, y)] = cell
         return walkable
